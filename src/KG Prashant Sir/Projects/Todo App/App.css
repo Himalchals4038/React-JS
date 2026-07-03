@@ -1,0 +1,23 @@
+#app-name{
+    margin: 1rem;
+}
+#app-name h1{
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 1.8rem;
+}
+input{
+    width: 100%;
+}
+#todo-item1, #todo-item2{
+    text-align: left;
+}
+.todo-row{
+    margin-top: 1.2rem;
+}
+.todo-button{
+    min-width: 50px;
+    font-family: 'sans verde';
+    height: 40px;
+    width: 80px;
+}

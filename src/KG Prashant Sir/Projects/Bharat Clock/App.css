@@ -1,0 +1,13 @@
+.bharat-clock{
+    margin: 1rem;
+}
+.head-name h1{
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+.desc p, .clock p{
+    font-size: 1.2rem;
+    font-family: 'sans serif';
+    margin-bottom: 0.8rem;
+}
