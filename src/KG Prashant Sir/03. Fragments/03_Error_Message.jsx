@@ -5,6 +5,7 @@ const ErrorMessage = ({items}) => {
     return(
         <>
             {items.length === 0 && <h4>No food items</h4>}
-        </>);
+        </>
+    );
 }
 export default ErrorMessage;

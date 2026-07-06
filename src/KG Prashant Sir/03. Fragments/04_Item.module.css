@@ -1,0 +1,8 @@
+.food-item {
+    font-weight: 600;
+    font-family: 'cambria';
+}
+.food-span{
+    background-color: rgb(253, 255, 164);
+    color:darkmagenta;
+}

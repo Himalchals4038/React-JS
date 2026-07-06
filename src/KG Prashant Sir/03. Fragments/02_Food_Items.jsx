@@ -11,6 +11,7 @@ const FoodItems = ({items}) => {
                     <Item key={item} foodItem={item}/>
                 )}
             </ul>
-        </>);
+        </>
+    );
 }
 export default FoodItems;
