@@ -38,7 +38,7 @@
 // import Todo from './KG Prashant Sir/Projects/Todo App v2/01_Container.jsx';
 // <Todo/>
 
-import Calculator from './KG Prashant Sir/Projects/Calculator/Container.jsx';
+import Calculator from './KG Prashant Sir/Projects/Calculator v1/Container.jsx';
 function App(){
   return(
     <>

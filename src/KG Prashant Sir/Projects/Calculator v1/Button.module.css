@@ -1,0 +1,9 @@
+.button-style{
+    padding: 1rem !important;
+    border: 1px solid #dee2e6 !important;
+    background-color: #f8f9fa !important;
+    height: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
