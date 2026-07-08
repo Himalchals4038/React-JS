@@ -1,0 +1,13 @@
+.container{
+    background-color: gainsboro;
+    border: 2px solid black;
+    margin: 1rem;
+    padding: 0.5rem;
+    width: 80%;
+    min-width: 400px;
+}
+.containerWrapper{
+    display: grid;
+    place-items: center;
+    min-height: 10vh;
+}

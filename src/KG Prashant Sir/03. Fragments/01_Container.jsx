@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import FoodItems from "./02_Food_Items.jsx";
 import ErrorMessage from "./03_Error_Message.jsx";

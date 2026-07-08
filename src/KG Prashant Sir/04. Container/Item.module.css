@@ -1,0 +1,17 @@
+.food-item {
+    font-weight: 600;
+    font-family: 'cambria';
+}
+/* :global(.list-group-item).food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+.food-span{
+    background-color: rgb(253, 255, 164);
+    color:darkmagenta;
+}
+.button-cart{
+    background-color: rgb(213, 165, 245) !important;
+    float: right;
+}

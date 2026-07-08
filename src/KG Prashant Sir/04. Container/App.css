@@ -1,0 +1,9 @@
+.head-name{
+    background-color: aqua;
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: underline;
+    font-family: 'verdana';
+    color:rgb(218, 20, 20);
+}
