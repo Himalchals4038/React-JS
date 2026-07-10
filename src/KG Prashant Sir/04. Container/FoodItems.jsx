@@ -8,7 +8,7 @@ const FoodItems = ({items}) => {
         <>
         <ul className="list-group">
             {items.map((item) => 
-                <Item key={item} foodItem={item}/>
+                <Item key={item} foodItem={item} handleBuyButton={() => alert(`${item} Added to Cart`)}/>
             )}
         </ul>
         </>
