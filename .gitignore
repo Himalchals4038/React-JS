@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Audio files and Hindi songs collection
+public/Hindi/
+src/assets/Hindi/
+Projects/Music Player Audio Visualizer/public/Hindi/
+Projects/Music Player Audio Visualizer/src/assets/Hindi/
+*.mp3
+*.wav
+*.flac
+*.ogg
+*.m4a
+

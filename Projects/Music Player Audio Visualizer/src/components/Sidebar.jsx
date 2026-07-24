@@ -1,11 +1,14 @@
 import React from 'react';
-import { Music, Radio, UploadCloud, Heart, Sliders, Disc } from 'lucide-react';
+import { Music, Radio, UploadCloud, Heart, Sliders, Disc, Library, Globe, CheckCircle, Flame } from 'lucide-react';
 
 export function Sidebar({ selectedTab, setSelectedTab, onOpenEqModal, onOpenImportModal, trackCounts }) {
   const navItems = [
     { id: 'all', label: 'All Tracks', icon: Music, count: trackCounts.all },
-    { id: 'ncs', label: 'NCS Portal', icon: Disc, count: trackCounts.ncs },
-    { id: 'audius', label: 'Audius Trending', icon: Radio, count: trackCounts.audius },
+    { id: 'hindi', label: 'Hindi Collection', icon: Flame, count: trackCounts.hindi },
+    { id: 'full', label: 'Full Songs Only', icon: CheckCircle, count: trackCounts.full },
+    { id: 'jamendo', label: 'Jamendo Albums', icon: Library, count: trackCounts.jamendo },
+    { id: 'audius', label: 'Audius Live', icon: Radio, count: trackCounts.audius },
+    { id: 'itunes', label: 'iTunes Previews', icon: Globe, count: trackCounts.itunes },
     { id: 'local', label: 'My Uploads', icon: UploadCloud, count: trackCounts.local },
     { id: 'favorites', label: 'Favorites', icon: Heart, count: trackCounts.favorites }
   ];

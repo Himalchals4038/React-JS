@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAudioEngine } from './hooks/useAudioEngine';
-import { INITIAL_NCS_TRACKS, fetchAudiusTrending } from './services/musicApi';
+import {
+  INITIAL_NCS_TRACKS,
+  fetchGlobaliTunesTracks,
+  fetchAudiusTrending,
+  fetchJamendoAlbums,
+  searchGlobalTracks
+} from './services/musicApi';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { VisualizerCanvas } from './components/VisualizerCanvas';
@@ -16,8 +22,11 @@ export default function App() {
 
   // Track Repositories
   const [ncsTracks] = useState(INITIAL_NCS_TRACKS);
+  const [itunesTracks, setItunesTracks] = useState([]);
   const [audiusTracks, setAudiusTracks] = useState([]);
+  const [jamendoTracks, setJamendoTracks] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   // App UI State
   const [selectedTab, setSelectedTab] = useState('all');
@@ -31,9 +40,9 @@ export default function App() {
   const [favorites, setFavorites] = useState(() => {
     try {
       const saved = localStorage.getItem('ncs_visualizer_favs');
-      return saved ? JSON.parse(saved) : ['ncs-1', 'ncs-2'];
+      return saved ? JSON.parse(saved) : ['init-1', 'init-2'];
     } catch {
-      return ['ncs-1', 'ncs-2'];
+      return ['init-1', 'init-2'];
     }
   });
 
@@ -45,19 +54,57 @@ export default function App() {
     }
   }, [favorites]);
 
-  // Fetch Audius open music catalog on initial mount
+  // Fetch Global Music APIs (iTunes, Audius, Jamendo) on initial mount
   useEffect(() => {
+    // 1. Fetch iTunes Global Multi-Language catalog (hundreds of tracks)
+    fetchGlobaliTunesTracks().then(tracks => {
+      if (tracks && tracks.length > 0) {
+        setItunesTracks(tracks);
+      }
+    });
+
+    // 2. Fetch Audius Trending tracks
     fetchAudiusTrending().then(tracks => {
       if (tracks && tracks.length > 0) {
         setAudiusTracks(tracks);
       }
     });
+
+    // 3. Fetch Jamendo Albums
+    fetchJamendoAlbums().then(tracks => {
+      if (tracks && tracks.length > 0) {
+        setJamendoTracks(tracks);
+      }
+    });
   }, []);
+
+  // Live Online Global Search when search query changes
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      searchGlobalTracks(searchQuery).then(results => {
+        setSearchResults(results);
+      });
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   // Combined Master Playlist
   const allTracks = useMemo(() => {
-    return [...ncsTracks, ...localTracks, ...audiusTracks];
-  }, [ncsTracks, localTracks, audiusTracks]);
+    // Deduplicate tracks by id
+    const trackMap = new Map();
+    [...searchResults, ...ncsTracks, ...localTracks, ...itunesTracks, ...audiusTracks, ...jamendoTracks].forEach(t => {
+      if (!trackMap.has(t.id)) {
+        trackMap.set(t.id, t);
+      }
+    });
+    return Array.from(trackMap.values());
+  }, [searchResults, ncsTracks, localTracks, itunesTracks, audiusTracks, jamendoTracks]);
 
   // Set default initial track if none loaded
   useEffect(() => {
@@ -65,15 +112,6 @@ export default function App() {
       playTrack(allTracks[0]);
     }
   }, [allTracks, currentTrack, playTrack]);
-
-  // Filtered tracks for current search & active view
-  const searchFilteredTracks = useMemo(() => {
-    if (!searchQuery.trim()) return allTracks;
-    const q = searchQuery.toLowerCase();
-    return allTracks.filter(
-      t => t.title.toLowerCase().includes(q) || t.artist.toLowerCase().includes(q) || t.genre.toLowerCase().includes(q)
-    );
-  }, [allTracks, searchQuery]);
 
   // Handle Track Completion Auto Next & Repeat
   useEffect(() => {
@@ -138,11 +176,15 @@ export default function App() {
   // Track Counts for Sidebar
   const trackCounts = useMemo(() => ({
     all: allTracks.length,
+    hindi: allTracks.filter(t => t.source === 'hindi').length,
+    full: allTracks.filter(t => t.isFullSong).length,
+    itunes: itunesTracks.length,
     ncs: ncsTracks.length,
     audius: audiusTracks.length,
+    jamendo: jamendoTracks.length,
     local: localTracks.length,
     favorites: favorites.length
-  }), [allTracks, ncsTracks, audiusTracks, localTracks, favorites]);
+  }), [allTracks, itunesTracks, ncsTracks, audiusTracks, jamendoTracks, localTracks, favorites]);
 
   return (
     <div className="app-container">
@@ -171,7 +213,7 @@ export default function App() {
 
           {/* Music Tracks Catalog & Filters */}
           <TrackList
-            tracks={searchFilteredTracks}
+            tracks={allTracks}
             currentTrack={currentTrack}
             isPlaying={isPlaying}
             favorites={favorites}

@@ -43,12 +43,18 @@
   padding: 0;
 }
 
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-main);
   background-color: var(--bg-dark);
   color: var(--text-main);
-  min-height: 100vh;
-  overflow-x: hidden;
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 40%),
@@ -76,8 +82,8 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   position: relative;
 }
